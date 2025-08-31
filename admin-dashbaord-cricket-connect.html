@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Cricket Connect</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary: #1a472a;
+            --secondary: #2e8b57;
+            --accent: #f39c12;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #27ae60;
+            --warning: #e67e22;
+            --danger: #e74c3c;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            color: var(--dark);
+        }
+        
+        .sidebar {
+            background-color: var(--primary);
+            color: white;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 250px;
+            padding-top: 20px;
+            z-index: 1000;
+            box-shadow: 3px 0 10px rgba(0,0,0,0.1);
+        }
+        
+        .sidebar-header {
+            padding: 0 20px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .sidebar-menu {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+        
+        .sidebar-menu li {
+            padding: 12px 20px;
+            transition: all 0.3s;
+        }
+        
+        .sidebar-menu li:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+        
+        .sidebar-menu li.active {
+            background-color: rgba(255,255,255,0.2);
+            border-left: 4px solid var(--accent);
+        }
+        
+        .sidebar-menu a {
+            color: white;
+            text-decoration: none;
+            display: block;
+        }
+        
+        .sidebar-menu i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+        
+        .admin-header {
+            background-color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+        
+        .stats-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .stats-card h3 {
+            color: var(--primary);
+            font-size: 2rem;
+            margin-bottom: 0;
+        }
+        
+        .stats-card p {
+            color: #6c757d;
+            margin-bottom: 0;
+        }
+        
+        .data-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+        
+        .data-table {
+            width: 100%;
+        }
+        
+        .data-table th {
+            background-color: #f8f9fa;
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .action-btn {
+            padding: 5px 10px;
+            margin-right: 5px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-view {
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        .btn-edit {
+            background-color: var(--accent);
+            color: white;
+        }
+        
+        .btn-delete {
+            background-color: var(--danger);
+            color: white;
+        }
+        
+        .search-box {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        
+        .search-box input {
+            padding-left: 40px;
+            border-radius: 20px;
+        }
+        
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 10px;
+            color: #6c757d;
+        }
+        
+        .pagination {
+            margin-top: 20px;
+        }
+        
+        .user-badge {
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .badge-player {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+        
+        .badge-owner {
+            background-color: #e3f2fd;
+            color: #1565c0;
+        }
+        
+        .badge-admin {
+            background-color: #fce4ec;
+            color: #c2185b;
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 70px;
+                overflow: hidden;
+            }
+            
+            .sidebar .menu-text {
+                display: none;
+            }
+            
+            .sidebar-header h3 {
+                display: none;
+            }
+            
+            .main-content {
+                margin-left: 70px;
+            }
+            
+            .sidebar-menu i {
+                margin-right: 0;
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h3><i class="bi bi-tree"></i> Admin Panel</h3>
+        </div>
+        <ul class="sidebar-menu">
+            <li class="active"><a href="#"><i class="bi bi-speedometer2"></i> <span class="menu-text">Dashboard</span></a></li>
+            <li><a href="#" onclick="showSection('users')"><i class="bi bi-people"></i> <span class="menu-text">Users</span></a></li>
+            <li><a href="#" onclick="showSection('arenas')"><i class="bi bi-geo-alt"></i> <span class="menu-text">Arenas</span></a></li>
+            <li><a href="#" onclick="showSection('matches')"><i class="bi bi-calendar-event"></i> <span class="menu-text">Matches</span></a></li>
+            <li><a href="#" onclick="showSection('teams')"><i class="bi bi-people"></i> <span class="menu-text">Teams</span></a></li>
+            <li><a href="#" onclick="logout()"><i class="bi bi-box-arrow-right"></i> <span class="menu-text">Logout</span></a></li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="admin-header">
+            <h4 class="mb-0">Admin Dashboard</h4>
+            <p class="text-muted mb-0">Manage all Cricket Connect data</p>
+        </div>
+
+        <!-- Dashboard Section -->
+        <div id="dashboard-section" class="section">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="stats-card">
+                        <i class="bi bi-people" style="font-size: 2rem; color: var(--primary);"></i>
+                        <h3 id="total-users">0</h3>
+                        <p>Total Users</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-card">
+                        <i class="bi bi-geo-alt" style="font-size: 2rem; color: var(--primary);"></i>
+                        <h3 id="total-arenas">0</h3>
+                        <p>Total Arenas</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-card">
+                        <i class="bi bi-calendar-event" style="font-size: 2rem; color: var(--primary);"></i>
+                        <h3 id="total-matches">0</h3>
+                        <p>Active Matches</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-card">
+                        <i class="bi bi-people" style="font-size: 2rem; color: var(--primary);"></i>
+                        <h3 id="total-teams">0</h3>
+                        <p>Total Teams</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="data-card">
+                        <h5 class="mb-3">Recent Users</h5>
+                        <div class="table-responsive">
+                            <table class="table data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Type</th>
+                                        <th>Joined</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="recent-users">
+                                    <!-- Recent users will be loaded here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="data-card">
+                        <h5 class="mb-3">Recent Matches</h5>
+                        <div class="table-responsive">
+                            <table class="table data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Date</th>
+                                        <th>Players</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="recent-matches">
+                                    <!-- Recent matches will be loaded here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Users Section -->
+        <div id="users-section" class="section" style="display: none;">
+            <div class="data-card">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="mb-0">All Users</h5>
+                    <div class="search-box">
+                        <i class="bi bi-search"></i>
+                        <input type="text" class="form-control" placeholder="Search users..." id="user-search">
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table data-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Type</th>
+                                <th>Phone</th>
+                                <th>Joined</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="all-users">
+                            <!-- All users will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1">Previous</a>
+                        </li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Arenas Section -->
+        <div id="arenas-section" class="section" style="display: none;">
+            <div class="data-card">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="mb-0">All Arenas</h5>
+                    <div class="search-box">
+                        <i class="bi bi-search"></i>
+                        <input type="text" class="form-control" placeholder="Search arenas..." id="arena-search">
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table data-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Address</th>
+                                <th>Phone</th>
+                                <th>Hours</th>
+                                <th>Rates</th>
+                                <th>Added By</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="all-arenas">
+                            <!-- All arenas will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1">Previous</a>
+                        </li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Matches Section -->
+        <div id="matches-section" class="section" style="display: none;">
+            <div class="data-card">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="mb-0">All Matches</h5>
+                    <div class="search-box">
+                        <i class="bi bi-search"></i>
+                        <input type="text" class="form-control" placeholder="Search matches..." id="match-search">
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table data-table">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Arena</th>
+                                <th>Date & Time</th>
+                                <th>Players Needed</th>
+                                <th>Contact</th>
+                                <th>Created By</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="all-matches">
+                            <!-- All matches will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1">Previous</a>
+                        </li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Teams Section -->
+        <div id="teams-section" class="section" style="display: none;">
+            <div class="data-card">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="mb-0">All Teams</h5>
+                    <div class="search-box">
+                        <i class="bi bi-search"></i>
+                        <input type="text" class="form-control" placeholder="Search teams..." id="team-search">
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table data-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Players</th>
+                                <th>Suitable Time</th>
+                                <th>Skill Level</th>
+                                <th>Contact</th>
+                                <th>Owner</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="all-teams">
+                            <!-- All teams will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1">Previous</a>
+                        </li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase and other JS -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCc1lWvEMlG_4kf0QqjvyUROA_oAy8TWFg",
+            authDomain: "cricketconnect-348b3.firebaseapp.com",
+            databaseURL: "https://cricketconnect-348b3-default-rtdb.firebaseio.com",
+            projectId: "cricketconnect-348b3",
+            storageBucket: "cricketconnect-348b3.appspot.com",
+            messagingSenderId: "996579123110",
+            appId: "1:996579123110:web:8996dc66f19ebe400b7967",
+            measurementId: "G-H2G6ZD87GJ"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        const auth = firebase.auth();
+
+        // Global variables
+        let currentAdmin = null;
+
+        // DOM Content Loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is admin
+            checkAdminAuth();
+            
+            // Load dashboard data
+            loadDashboardData();
+            loadUsers();
+            loadArenas();
+            loadMatches();
+            loadTeams();
+        });
+
+        // Authentication Functions
+        function checkAdminAuth() {
+            // In a real app, you would check if the user has admin privileges
+            // For this demo, we'll just check if the user is logged in
+            auth.onAuthStateChanged(user => {
+                if (user) {
+                    currentAdmin = user;
+                    // Check if user is admin (you would implement proper admin verification)
+                    verifyAdminUser(user.uid);
+                } else {
+                    // Redirect to login page if not authenticated
+                    window.location.href = "index.html";
+                }
+            });
+        }
+
+        function verifyAdminUser(uid) {
+            // In a real app, you would check if the user has admin privileges in your database
+            // For this demo, we'll just allow access
+            console.log("Admin access granted to user:", uid);
+        }
+
+        function logout() {
+            auth.signOut().then(() => {
+                window.location.href = "index.html";
+            });
+        }
+
+        // UI Functions
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.style.display = 'none';
+            });
+            
+            // Show the requested section
+            document.getElementById(sectionId + '-section').style.display = 'block';
+            
+            // Update active menu item
+            document.querySelectorAll('.sidebar-menu li').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Find and activate the corresponding menu item
+            const menuItems = document.querySelectorAll('.sidebar-menu li');
+            for (let item of menuItems) {
+                if (item.querySelector('a').getAttribute('onclick') && item.querySelector('a').getAttribute('onclick').includes(sectionId)) {
+                    item.classList.add('active');
+                    break;
+                }
+            }
+        }
+
+        // Data Loading Functions
+        function loadDashboardData() {
+            // Load user count
+            database.ref('users').once('value')
+                .then(snapshot => {
+                    const userCount = snapshot.numChildren();
+                    document.getElementById('total-users').textContent = userCount;
+                    
+                    // Load recent users
+                    const recentUsers = [];
+                    snapshot.forEach(user => {
+                        recentUsers.push(user.val());
+                    });
+                    
+                    // Display 5 most recent users
+                    recentUsers.sort((a, b) => b.createdAt - a.createdAt);
+                    const recentUsersList = document.getElementById('recent-users');
+                    recentUsersList.innerHTML = '';
+                    
+                    for (let i = 0; i < Math.min(5, recentUsers.length); i++) {
+                        const user = recentUsers[i];
+                        const row = document.createElement('tr');
+                        
+                        const joinDate = new Date(user.createdAt);
+                        const formattedDate = joinDate.toLocaleDateString();
+                        
+                        let badgeClass = 'badge-player';
+                        if (user.userType === 'owner') badgeClass = 'badge-owner';
+                        if (user.isAdmin) badgeClass = 'badge-admin';
+                        
+                        row.innerHTML = `
+                            <td>${user.name || 'Unknown'}</td>
+                            <td><span class="user-badge ${badgeClass}">${user.userType || 'player'}</span></td>
+                            <td>${formattedDate}</td>
+                            <td>
+                                <button class="action-btn btn-view"><i class="bi bi-eye"></i></button>
+                                <button class="action-btn btn-edit"><i class="bi bi-pencil"></i></button>
+                            </td>
+                        `;
+                        recentUsersList.appendChild(row);
+                    }
+                });
+            
+            // Load arena count
+            database.ref('arenas').once('value')
+                .then(snapshot => {
+                    const arenaCount = snapshot.numChildren();
+                    document.getElementById('total-arenas').textContent = arenaCount;
+                });
+            
+            // Load match count (only active matches)
+            database.ref('matches').once('value')
+                .then(snapshot => {
+                    const now = Date.now();
+                    let activeMatchCount = 0;
+                    const recentMatches = [];
+                    
+                    snapshot.forEach(match => {
+                        const matchData = match.val();
+                        if (matchData.timestamp > now) {
+                            activeMatchCount++;
+                        }
+                        recentMatches.push(matchData);
+                    });
+                    
+                    document.getElementById('total-matches').textContent = activeMatchCount;
+                    
+                    // Display 5 most recent matches
+                    recentMatches.sort((a, b) => b.createdAt - a.createdAt);
+                    const recentMatchesList = document.getElementById('recent-matches');
+                    recentMatchesList.innerHTML = '';
+                    
+                    for (let i = 0; i < Math.min(5, recentMatches.length); i++) {
+                        const match = recentMatches[i];
+                        const row = document.createElement('tr');
+                        
+                        const matchDate = new Date(match.timestamp);
+                        const formattedDate = matchDate.toLocaleDateString();
+                        
+                        row.innerHTML = `
+                            <td>${match.title || 'Untitled Match'}</td>
+                            <td>${formattedDate}</td>
+                            <td>${match.playersNeeded || 0} needed</td>
+                            <td>
+                                <button class="action-btn btn-view"><i class="bi bi-eye"></i></button>
+                                <button class="action-btn btn-edit"><i class="bi bi-pencil"></i></button>
+                            </td>
+                        `;
+                        recentMatchesList.appendChild(row);
+                    }
+                });
+            
+            // Load team count
+            database.ref('teams').once('value')
+                .then(snapshot => {
+                    const teamCount = snapshot.numChildren();
+                    document.getElementById('total-teams').textContent = teamCount;
+                });
+        }
+
+        function loadUsers() {
+            database.ref('users').once('value')
+                .then(snapshot => {
+                    const usersList = document.getElementById('all-users');
+                    usersList.innerHTML = '';
+                    
+                    if (!snapshot.exists()) {
+                        usersList.innerHTML = `
+                            <tr>
+                                <td colspan="6" class="text-center py-4">No users found</td>
+                            </tr>
+                        `;
+                        return;
+                    }
+                    
+                    snapshot.forEach(user => {
+                        const userData = user.val();
+                        const row = document.createElement('tr');
+                        
+                        const joinDate = new Date(userData.createdAt);
+                        const formattedDate = joinDate.toLocaleDateString();
+                        
+                        let badgeClass = 'badge-player';
+                        if (userData.userType === 'owner') badgeClass = 'badge-owner';
+                        if (userData.isAdmin) badgeClass = 'badge-admin';
+                        
+                        row.innerHTML = `
+                            <td>${userData.name || 'Unknown'}</td>
+                            <td>${userData.email || 'No email'}</td>
+                            <td><span class="user-badge ${badgeClass}">${userData.userType || 'player'}</span></td>
+                            <td>${userData.phone || 'No phone'}</td>
+                            <td>${formattedDate}</td>
+                            <td>
+                                <button class="action-btn btn-view" onclick="viewUser('${user.key}')"><i class="bi bi-eye"></i></button>
+                                <button class="action-btn btn-edit" onclick="editUser('${user.key}')"><i class="bi bi-pencil"></i></button>
+                                <button class="action-btn btn-delete" onclick="deleteUser('${user.key}')"><i class="bi bi-trash"></i></button>
+                            </td>
+                        `;
+                        usersList.appendChild(row);
+                    });
+                });
+        }
+
+        function loadArenas() {
+            database.ref('arenas').once('value')
+                .then(snapshot => {
+                    const arenasList = document.getElementById('all-arenas');
+                    arenasList.innerHTML = '';
+                    
+                    if (!snapshot.exists()) {
+                        arenasList.innerHTML = `
+                            <tr>
+                                <td colspan="7" class="text-center py-4">No arenas found</td>
+                            </tr>
+                        `;
+                        return;
+                    }
+                    
+                    snapshot.forEach(arena => {
+                        const arenaData = arena.val();
+                        const row = document.createElement('tr');
+                        
+                        // Get owner name
+                        let ownerName = 'Unknown';
+                        if (arenaData.addedBy) {
+                            database.ref('users/' + arenaData.addedBy).once('value')
+                                .then(userSnapshot => {
+                                    if (userSnapshot.exists()) {
+                                        const userData = userSnapshot.val();
+                                        ownerName = userData.name || 'Unknown';
+                                    }
+                                });
+                        }
+                        
+                        row.innerHTML = `
+                            <td>${arenaData.name || 'Unnamed Arena'}</td>
+                            <td>${arenaData.address || 'No address'}</td>
+                            <td>${arenaData.phone || 'No phone'}</td>
+                            <td>${arenaData.hours || 'Not specified'}</td>
+                            <td>PKR ${arenaData.rates || '0'}/hour</td>
+                            <td>${ownerName}</td>
+                            <td>
+                                <button class="action-btn btn-view" onclick="viewArena('${arena.key}')"><i class="bi bi-eye"></i></button>
+                                <button class="action-btn btn-edit" onclick="editArena('${arena.key}')"><i class="bi bi-pencil"></i></button>
+                                <button class="action-btn btn-delete" onclick="deleteArena('${arena.key}')"><i class="bi bi-trash"></i></button>
+                            </td>
+                        `;
+                        arenasList.appendChild(row);
+                    });
+                });
+        }
+
+        function loadMatches() {
+            database.ref('matches').once('value')
+                .then(snapshot => {
+                    const matchesList = document.getElementById('all-matches');
+                    matchesList.innerHTML = '';
+                    
+                    if (!snapshot.exists()) {
+                        matchesList.innerHTML = `
+                            <tr>
+                                <td colspan="7" class="text-center py-4">No matches found</td>
+                            </tr>
+                        `;
+                        return;
+                    }
+                    
+                    snapshot.forEach(match => {
+                        const matchData = match.val();
+                        const row = document.createElement('tr');
+                        
+                        const matchDate = new Date(matchData.timestamp);
+                        const formattedDate = matchDate.toLocaleDateString();
+                        const formattedTime = matchDate.toLocaleTimeString();
+                        
+                        // Get creator name
+                        let creatorName = 'Unknown';
+                        if (matchData.createdBy) {
+                            database.ref('users/' + matchData.createdBy).once('value')
+                                .then(userSnapshot => {
+                                    if (userSnapshot.exists()) {
+                                        const userData = userSnapshot.val();
+                                        creatorName = userData.name || 'Unknown';
+                                    }
+                                });
+                        }
+                        
+                        row.innerHTML = `
+                            <td>${matchData.title || 'Untitled Match'}</td>
+                            <td>${matchData.arenaName || 'Unknown Arena'}</td>
+                            <td>${formattedDate} ${formattedTime}</td>
+                            <td>${matchData.playersNeeded || 0}</td>
+                            <td>${matchData.contact || 'No contact'}</td>
+                            <td>${creatorName}</td>
+                            <td>
+                                <button class="action-btn btn-view" onclick="viewMatch('${match.key}')"><i class="bi bi-eye"></i></button>
+                                <button class="action-btn btn-edit" onclick="editMatch('${match.key}')"><i class="bi bi-pencil"></i></button>
+                                <button class="action-btn btn-delete" onclick="deleteMatch('${match.key}')"><i class="bi bi-trash"></i></button>
+                            </td>
+                        `;
+                        matchesList.appendChild(row);
+                    });
+                });
+        }
+
+        function loadTeams() {
+            database.ref('teams').once('value')
+                .then(snapshot => {
+                    const teamsList = document.getElementById('all-teams');
+                    teamsList.innerHTML = '';
+                    
+                    if (!snapshot.exists()) {
+                        teamsList.innerHTML = `
+                            <tr>
+                                <td colspan="7" class="text-center py-4">No teams found</td>
+                            </tr>
+                        `;
+                        return;
+                    }
+                    
+                    snapshot.forEach(team => {
+                        const teamData = team.val();
+                        const row = document.createElement('tr');
+                        
+                        // Get owner name
+                        let ownerName = 'Unknown';
+                        if (teamData.ownerId) {
+                            database.ref('users/' + teamData.ownerId).once('value')
+                                .then(userSnapshot => {
+                                    if (userSnapshot.exists()) {
+                                        const userData = userSnapshot.val();
+                                        ownerName = userData.name || 'Unknown';
+                                    }
+                                });
+                        }
+                        
+                        row.innerHTML = `
+                            <td>${teamData.name || 'Unnamed Team'}</td>
+                            <td>${teamData.players || 'No players'}</td>
+                            <td>${teamData.playersNeeded || 0}</td>
+                            <td>${teamData.skill || 'Not specified'}</td>
+                            <td>${teamData.contact || 'No contact'}</td>
+                            <td>${ownerName}</td>
+                            <td>
+                                <button class="action-btn btn-view" onclick="viewTeam('${team.key}')"><i class="bi bi-eye"></i></button>
+                                <button class="action-btn btn-edit" onclick="editTeam('${team.key}')"><i class="bi bi-pencil"></i></button>
+                                <button class="action-btn btn-delete" onclick="deleteTeam('${team.key}')"><i class="bi bi-trash"></i></button>
+                            </td>
+                        `;
+                        teamsList.appendChild(row);
+                    });
+                });
+        }
+
+        // Data Management Functions
+        function viewUser(userId) {
+            alert('View user: ' + userId);
+            // In a real app, you would show a modal with user details
+        }
+
+        function editUser(userId) {
+            alert('Edit user: ' + userId);
+            // In a real app, you would show a form to edit user details
+        }
+
+        function deleteUser(userId) {
+            if (confirm('Are you sure you want to delete this user?')) {
+                database.ref('users/' + userId).remove()
+                    .then(() => {
+                        alert('User deleted successfully');
+                        loadUsers();
+                        loadDashboardData();
+                    })
+                    .catch(error => {
+                        alert('Error deleting user: ' + error.message);
+                    });
+            }
+        }
+
+        function viewArena(arenaId) {
+            alert('View arena: ' + arenaId);
+            // In a real app, you would show a modal with arena details
+        }
+
+        function editArena(arenaId) {
+            alert('Edit arena: ' + arenaId);
+            // In a real app, you would show a form to edit arena details
+        }
+
+        function deleteArena(arenaId) {
+            if (confirm('Are you sure you want to delete this arena?')) {
+                database.ref('arenas/' + arenaId).remove()
+                    .then(() => {
+                        alert('Arena deleted successfully');
+                        loadArenas();
+                        loadDashboardData();
+                    })
+                    .catch(error => {
+                        alert('Error deleting arena: ' + error.message);
+                    });
+            }
+        }
+
+        function viewMatch(matchId) {
+            alert('View match: ' + matchId);
+            // In a real app, you would show a modal with match details
+        }
+
+        function editMatch(matchId) {
+            alert('Edit match: ' + matchId);
+            // In a real app, you would show a form to edit match details
+        }
+
+        function deleteMatch(matchId) {
+            if (confirm('Are you sure you want to delete this match?')) {
+                database.ref('matches/' + matchId).remove()
+                    .then(() => {
+                        alert('Match deleted successfully');
+                        loadMatches();
+                        loadDashboardData();
+                    })
+                    .catch(error => {
+                        alert('Error deleting match: ' + error.message);
+                    });
+            }
+        }
+
+        function viewTeam(teamId) {
+            alert('View team: ' + teamId);
+            // In a real app, you would show a modal with team details
+        }
+
+        function editTeam(teamId) {
+            alert('Edit team: ' + teamId);
+            // In a real app, you would show a form to edit team details
+        }
+
+        function deleteTeam(teamId) {
+            if (confirm('Are you sure you want to delete this team?')) {
+                database.ref('teams/' + teamId).remove()
+                    .then(() => {
+                        alert('Team deleted successfully');
+                        loadTeams();
+                        loadDashboardData();
+                    })
+                    .catch(error => {
+                        alert('Error deleting team: ' + error.message);
+                    });
+            }
+        }
+    </script>
+</body>
+</html>
