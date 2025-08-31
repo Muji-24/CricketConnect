@@ -8,52 +8,55 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <style>
         :root {
-            --primary: #2c3e50;
-            --secondary: #e74c3c;
-            --accent: #3498db;
+            --primary: #005f21;
+            --secondary: #2e8b57;
+            --accent: #f39c12;
             --light: #ecf0f1;
             --dark: #2c3e50;
-            --success: #2ecc71;
-            --warning: #f39c12;
+            --success: #27ae60;
+            --warning: #e67e22;
+            --danger: #e74c3c;
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f5f7fa;
+            font-family: 'Poppins', sans-serif;
+            background-color: #e9f4ff;
             color: var(--dark);
+            padding-bottom: 60px;
         }
         
         .navbar {
             background-color: white;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
         }
         
         .navbar-brand {
-            font-weight: 700;
-            color: var(--secondary);
-            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            font-size: 1.6rem;
         }
         
         .nav-link {
             font-weight: 500;
             color: var(--dark);
-            margin: 0 5px;
-            border-radius: 5px;
+            margin: 0 3px;
+            border-radius: 8px;
             padding: 8px 15px !important;
+            transition: all 0.3s ease;
         }
         
         .nav-link:hover, .nav-link.active {
-            background-color: var(--light);
-            color: var(--secondary);
+            background-color: rgba(26, 71, 42, 0.1);
+            color: var(--primary);
         }
         
         .section {
             display: none;
-            animation: fadeIn 0.3s ease;
+            animation: fadeIn 0.4s ease;
         }
         
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
         
@@ -62,52 +65,56 @@
         }
         
         .btn-primary {
-            background-color: var(--secondary);
-            border-color: var(--secondary);
+            background-color: var(--primary);
+            border-color: var(--primary);
+            font-weight: 600;
         }
         
         .btn-primary:hover {
-            background-color: #c0392b;
-            border-color: #c0392b;
+            background-color: #143b21;
+            border-color: #143b21;
         }
         
         .btn-outline-primary {
-            color: var(--secondary);
-            border-color: var(--secondary);
+            color: var(--primary);
+            border-color: var(--primary);
+            font-weight: 600;
         }
         
         .btn-outline-primary:hover {
-            background-color: var(--secondary);
+            background-color: var(--primary);
             color: white;
         }
         
         .card {
             border: none;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.06);
             transition: all 0.3s ease;
             margin-bottom: 20px;
+            overflow: hidden;
         }
         
         .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.1);
         }
         
         .card-header {
             background-color: var(--primary);
             color: white;
-            border-radius: 10px 10px 0 0 !important;
+            border-radius: 12px 12px 0 0 !important;
             font-weight: 600;
+            padding: 15px 20px;
         }
         
         .auth-container {
             max-width: 500px;
-            margin: 50px auto;
+            margin: 40px auto;
             background: white;
             padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.07);
         }
         
         .profile-img {
@@ -121,57 +128,118 @@
         
         .stat-card {
             background: white;
-            border-radius: 10px;
+            border-radius: 12px;
             padding: 20px;
             margin-bottom: 20px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            text-align: center;
         }
         
         .stat-card h3 {
-            color: var(--secondary);
+            color: var(--primary);
             font-size: 2.5rem;
             margin-bottom: 0;
-        }
-        
-        .ball-btn {
-            width: 50px;
-            height: 50px;
-            margin: 5px;
-            font-size: 16px;
-            font-weight: bold;
-            border-radius: 50% !important;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .ball-btn.dot {
-            background-color: var(--light);
-            color: var(--dark);
-        }
-        
-        .ball-btn.wicket {
-            background-color: var(--secondary);
-            color: white;
-        }
-        
-        .ball-btn.wide {
-            background-color: var(--warning);
-            color: white;
-        }
-        
-        .score-display {
-            font-size: 2rem;
-            font-weight: bold;
-            color: var(--primary);
+            font-weight: 700;
         }
         
         .badge-custom {
             background-color: var(--light);
             color: var(--dark);
             font-weight: 500;
-            padding: 5px 10px;
+            padding: 6px 12px;
             border-radius: 20px;
+            font-size: 0.85rem;
+        }
+        
+        .user-type-selector {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .user-type-btn {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .user-type-btn.active {
+            border-color: var(--primary);
+            background-color: rgba(26, 71, 42, 0.1);
+        }
+        
+        .user-type-btn i {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .carousel {
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        
+        .carousel-item img {
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .carousel-control-prev, .carousel-control-next {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(0,0,0,0.3);
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0.8;
+        }
+        
+        .carousel-control-prev {
+            left: 10px;
+        }
+        
+        .carousel-control-next {
+            right: 10px;
+        }
+        
+        .match-card, .team-card, .arena-card {
+            transition: transform 0.3s ease;
+        }
+        
+        .match-card:hover, .team-card:hover, .arena-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .countdown-badge {
+            background-color: var(--warning);
+            color: white;
+            font-weight: 600;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+        }
+        
+        .expired-badge {
+            background-color: var(--danger);
+            color: white;
+        }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            background-color: rgba(26, 71, 42, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            color: var(--primary);
+            font-size: 1.5rem;
         }
         
         .tab-content {
@@ -181,12 +249,37 @@
         .nav-tabs .nav-link {
             border: none;
             color: var(--dark);
+            font-weight: 500;
+            padding: 10px 15px;
         }
         
         .nav-tabs .nav-link.active {
-            color: var(--secondary);
-            border-bottom: 3px solid var(--secondary);
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
             background: transparent;
+        }
+        
+        .floating-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .floating-btn:hover {
+            transform: scale(1.1);
+            background-color: #143b21;
         }
         
         @media (max-width: 768px) {
@@ -195,10 +288,28 @@
                 padding: 20px;
             }
             
-            .ball-btn {
-                width: 40px;
-                height: 40px;
-                font-size: 14px;
+            .user-type-selector {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .navbar-brand {
+                font-size: 1.4rem;
+            }
+            
+            .nav-link {
+                font-size: 0.9rem;
+                padding: 6px 10px !important;
+            }
+            
+            .feature-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+            
+            .carousel-item img {
+                height: 180px;
             }
         }
     </style>
@@ -208,7 +319,7 @@
     <nav class="navbar navbar-expand-lg navbar-light sticky-top">
         <div class="container">
             <a class="navbar-brand" href="#" onclick="showSection('home-section')">
-                <i class="bi bi-activity"></i> Cricket Connect
+                <i class="bi bi-tree"></i> Cricket Connect
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -228,11 +339,6 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#" onclick="showSection('teams-section')">
                             <i class="bi bi-people"></i> Teams
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" onclick="showSection('scoreboard-section')">
-                            <i class="bi bi-clipboard-data"></i> Scoreboard
                         </a>
                     </li>
                 </ul>
@@ -273,52 +379,52 @@
         <!-- Home Section -->
         <div id="home-section" class="section active-section">
             <div class="text-center mb-5">
-                <h1 class="display-4 mb-3">Welcome to Cricket Connect</h1>
+                <h1 class="display-5 fw-bold mb-3 text-primary">Welcome to Cricket Connect</h1>
                 <p class="lead text-muted">Your ultimate platform for indoor cricket in Sheikhupura</p>
             </div>
             
             <div class="row">
                 <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        <div class="card-body text-center">
-                            <div class="mb-3">
-                                <i class="bi bi-geo-alt-fill" style="font-size: 2rem; color: var(--secondary);"></i>
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <div class="feature-icon mx-auto">
+                                <i class="bi bi-geo-alt"></i>
                             </div>
-                            <h4 class="card-title">Find Arenas</h4>
+                            <h4 class="card-title fw-bold">Find Arenas</h4>
                             <p class="card-text">Discover all indoor cricket arenas in Sheikhupura with complete details.</p>
-                            <a href="#" class="btn btn-primary" onclick="showSection('arenas-section')">Explore Arenas</a>
+                            <a href="#" class="btn btn-primary mt-2" onclick="showSection('arenas-section')">Explore Arenas</a>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        <div class="card-body text-center">
-                            <div class="mb-3">
-                                <i class="bi bi-calendar-event-fill" style="font-size: 2rem; color: var(--secondary);"></i>
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <div class="feature-icon mx-auto">
+                                <i class="bi bi-calendar-event"></i>
                             </div>
-                            <h4 class="card-title">Join Matches</h4>
+                            <h4 class="card-title fw-bold">Join Matches</h4>
                             <p class="card-text">Find ongoing matches looking for players or create your own match.</p>
-                            <a href="#" class="btn btn-primary" onclick="showSection('matches-section')">View Matches</a>
+                            <a href="#" class="btn btn-primary mt-2" onclick="showSection('matches-section')">View Matches</a>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        <div class="card-body text-center">
-                            <div class="mb-3">
-                                <i class="bi bi-clipboard-data-fill" style="font-size: 2rem; color: var(--secondary);"></i>
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <div class="feature-icon mx-auto">
+                                <i class="bi bi-people"></i>
                             </div>
-                            <h4 class="card-title">Track Scores</h4>
-                            <p class="card-text">Record and track your match scores with our easy-to-use scoreboard.</p>
-                            <a href="#" class="btn btn-primary" onclick="showSection('scoreboard-section')">Scoreboard</a>
+                            <h4 class="card-title fw-bold">Build Teams</h4>
+                            <p class="card-text">Create your team or join existing teams to play together regularly.</p>
+                            <a href="#" class="btn btn-primary mt-2" onclick="showSection('teams-section')">Explore Teams</a>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <div class="card mt-4">
-                <div class="card-body">
-                    <h4 class="card-title"><i class="bi bi-info-circle"></i> How it works</h4>
+            <div class="card mt-4 border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <h4 class="card-title fw-bold mb-4"><i class="bi bi-info-circle"></i> How it works</h4>
                     <div class="row mt-3">
                         <div class="col-md-4 mb-3">
                             <div class="d-flex">
@@ -329,7 +435,7 @@
                                 </div>
                                 <div>
                                     <h5>Create Account</h5>
-                                    <p class="text-muted">Sign up with your details and cricket preferences</p>
+                                    <p class="text-muted">Sign up as a player or ground owner based on your needs</p>
                                 </div>
                             </div>
                         </div>
@@ -341,8 +447,8 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <h5>Find Matches</h5>
-                                    <p class="text-muted">Browse ongoing matches or create your own</p>
+                                    <h5>Explore & Connect</h5>
+                                    <p class="text-muted">Find arenas, join matches or create your own team</p>
                                 </div>
                             </div>
                         </div>
@@ -354,8 +460,8 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <h5>Play & Track</h5>
-                                    <p class="text-muted">Join matches and track your performance</p>
+                                    <h5>Play Cricket</h5>
+                                    <p class="text-muted">Connect with other players and enjoy the game</p>
                                 </div>
                             </div>
                         </div>
@@ -368,7 +474,7 @@
         <div id="login-section" class="section">
             <div class="auth-container">
                 <div class="text-center mb-4">
-                    <h2><i class="bi bi-box-arrow-in-right"></i> Login</h2>
+                    <h2 class="fw-bold text-primary"><i class="bi bi-box-arrow-in-right"></i> Login</h2>
                     <p class="text-muted">Enter your credentials to access your account</p>
                 </div>
                 <form id="login-form">
@@ -380,8 +486,8 @@
                         <label for="login-password" class="form-label">Password</label>
                         <input type="password" class="form-control" id="login-password" required>
                     </div>
-                    <button type="submit" class="btn btn-primary w-100">Login</button>
-                    <p class="text-center mt-3">Don't have an account? <a href="#" onclick="showSection('signup-section')" class="text-primary">Sign Up</a></p>
+                    <button type="submit" class="btn btn-primary w-100 py-2 fw-bold">Login</button>
+                    <p class="text-center mt-3">Don't have an account? <a href="#" onclick="showSection('signup-section')" class="text-primary fw-medium">Sign Up</a></p>
                 </form>
             </div>
         </div>
@@ -390,37 +496,70 @@
         <div id="signup-section" class="section">
             <div class="auth-container">
                 <div class="text-center mb-4">
-                    <h2><i class="bi bi-person-plus"></i> Sign Up</h2>
+                    <h2 class="fw-bold text-primary"><i class="bi bi-person-plus"></i> Sign Up</h2>
                     <p class="text-muted">Create your cricket profile</p>
                 </div>
+                
+                <div class="user-type-selector">
+                    <div class="user-type-btn" id="player-type" onclick="selectUserType('player')">
+                        <i class="bi bi-person"></i>
+                        <h5>Player</h5>
+                        <p class="small text-muted">I want to play cricket</p>
+                    </div>
+                    <div class="user-type-btn" id="owner-type" onclick="selectUserType('owner')">
+                        <i class="bi bi-building"></i>
+                        <h5>Ground Owner</h5>
+                        <p class="small text-muted">I own a cricket facility</p>
+                    </div>
+                </div>
+                
                 <form id="signup-form">
+                    <input type="hidden" id="user-type" value="player" required>
+                    
                     <div class="mb-3">
                         <label for="signup-name" class="form-label">Full Name</label>
                         <input type="text" class="form-control" id="signup-name" required>
                     </div>
+                    
                     <div class="mb-3">
                         <label for="signup-phone" class="form-label">Phone Number</label>
                         <input type="tel" class="form-control" id="signup-phone" required>
                     </div>
-                    <div class="mb-3">
-                        <label for="signup-skill" class="form-label">Cricket Skill Level</label>
-                        <select class="form-select" id="signup-skill" required>
-                            <option value="">Select skill level</option>
-                            <option value="beginner">Beginner</option>
-                            <option value="intermediate">Intermediate</option>
-                            <option value="advanced">Advanced</option>
-                            <option value="professional">Professional</option>
-                        </select>
+                    
+                    <div id="player-fields">
+                        <div class="mb-3">
+                            <label for="signup-skill" class="form-label">Cricket Skill Level</label>
+                            <select class="form-select" id="signup-skill">
+                                <option value="">Select skill level</option>
+                                <option value="beginner">Beginner</option>
+                                <option value="intermediate">Intermediate</option>
+                                <option value="advanced">Advanced</option>
+                                <option value="professional">Professional</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="signup-role" class="form-label">Preferred Role</label>
+                            <select class="form-select" id="signup-role">
+                                <option value="">Select preferred role</option>
+                                <option value="batsman">Batsman</option>
+                                <option value="bowler">Bowler</option>
+                                <option value="all-rounder">All Rounder</option>
+                                <option value="wicketkeeper">Wicketkeeper</option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="signup-role" class="form-label">Preferred Role</label>
-                        <select class="form-select" id="signup-role" required>
-                            <option value="">Select preferred role</option>
-                            <option value="batsman">Batsman</option>
-                            <option value="bowler">Bowler</option>
-                            <option value="all-rounder">All Rounder</option>
-                        </select>
+                    
+                    <div id="owner-fields" style="display: none;">
+                        <div class="mb-3">
+                            <label for="signup-business" class="form-label">Business Name</label>
+                            <input type="text" class="form-control" id="signup-business">
+                        </div>
+                        <div class="mb-3">
+                            <label for="signup-tax" class="form-label">Tax ID (Optional)</label>
+                            <input type="text" class="form-control" id="signup-tax">
+                        </div>
                     </div>
+                    
                     <div class="mb-3">
                         <label for="signup-email" class="form-label">Email</label>
                         <input type="email" class="form-control" id="signup-email" required>
@@ -429,8 +568,9 @@
                         <label for="signup-password" class="form-label">Password</label>
                         <input type="password" class="form-control" id="signup-password" required>
                     </div>
-                    <button type="submit" class="btn btn-primary w-100">Sign Up</button>
-                    <p class="text-center mt-3">Already have an account? <a href="#" onclick="showSection('login-section')" class="text-primary">Login</a></p>
+                    
+                    <button type="submit" class="btn btn-primary w-100 py-2 fw-bold">Sign Up</button>
+                    <p class="text-center mt-3">Already have an account? <a href="#" onclick="showSection('login-section')" class="text-primary fw-medium">Login</a></p>
                 </form>
             </div>
         </div>
@@ -438,36 +578,43 @@
         <!-- Profile Section -->
         <div id="profile-section" class="section">
             <div class="text-center mb-4">
-                <img src="Gemini_Generated_Image_j7dlelj7dlelj7dl.png" alt="Profile" class="profile-img mb-3">
-                <h2 id="profile-name">User Name</h2>
+                <div class="bg-primary rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 120px; height: 120px;">
+                    <i class="bi bi-person-fill text-white" style="font-size: 3rem;"></i>
+                </div>
+                <h2 class="mt-3 fw-bold" id="profile-name">User Name</h2>
                 <p class="text-muted" id="profile-email">user@example.com</p>
+                <span class="badge bg-primary" id="profile-type">Player</span>
             </div>
             
             <div class="row">
                 <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-header">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-header bg-primary text-white">
                             <h5 class="mb-0"><i class="bi bi-person-lines-fill"></i> Personal Information</h5>
                         </div>
                         <div class="card-body">
                             <div class="mb-3">
                                 <label class="form-label text-muted">Phone</label>
-                                <p id="profile-phone" class="form-control-static">Not provided</p>
+                                <p id="profile-phone" class="form-control-static fw-medium">Not provided</p>
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-3" id="profile-skill-container">
                                 <label class="form-label text-muted">Skill Level</label>
-                                <p id="profile-skill" class="form-control-static">Not provided</p>
+                                <p id="profile-skill" class="form-control-static fw-medium">Not provided</p>
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-3" id="profile-role-container">
                                 <label class="form-label text-muted">Preferred Role</label>
-                                <p id="profile-role" class="form-control-static">Not provided</p>
+                                <p id="profile-role" class="form-control-static fw-medium">Not provided</p>
+                            </div>
+                            <div class="mb-3" id="profile-business-container" style="display: none;">
+                                <label class="form-label text-muted">Business Name</label>
+                                <p id="profile-business" class="form-control-static fw-medium">Not provided</p>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-header">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-header bg-primary text-white">
                             <h5 class="mb-0"><i class="bi bi-graph-up"></i> Statistics</h5>
                         </div>
                         <div class="card-body">
@@ -506,14 +653,14 @@
         <!-- Arenas Section -->
         <div id="arenas-section" class="section">
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2><i class="bi bi-geo-alt"></i> Cricket Arenas</h2>
-                <button class="btn btn-primary" id="add-arena-btn" onclick="showAddArenaForm()">
+                <h2 class="fw-bold text-primary"><i class="bi bi-geo-alt"></i> Cricket Arenas</h2>
+                <button class="btn btn-primary" id="add-arena-btn" onclick="showAddArenaForm()" style="display: none;">
                     <i class="bi bi-plus-circle"></i> Add Arena
                 </button>
             </div>
             
-            <div id="add-arena-form" style="display: none;" class="card mb-4">
-                <div class="card-header">
+            <div id="add-arena-form" style="display: none;" class="card mb-4 border-0 shadow-sm">
+                <div class="card-header bg-primary text-white">
                     <h5 class="mb-0"><i class="bi bi-plus-circle"></i> Add New Arena</h5>
                 </div>
                 <div class="card-body">
@@ -524,7 +671,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="arena-address" class="form-label">Address</label>
-                            <input type="text" class="form-control" id="arena-address" required>
+                            <textarea class="form-control" id="arena-address" rows="2" required></textarea>
                         </div>
                         <div class="mb-3">
                             <label for="arena-phone" class="form-label">Contact Number</label>
@@ -535,8 +682,17 @@
                             <input type="text" class="form-control" id="arena-hours" placeholder="e.g., 9:00 AM - 11:00 PM" required>
                         </div>
                         <div class="mb-3">
+                            <label for="arena-rates" class="form-label">Hourly Rates (PKR)</label>
+                            <input type="number" class="form-control" id="arena-rates" min="0" required>
+                        </div>
+                        <div class="mb-3">
                             <label for="arena-facilities" class="form-label">Facilities</label>
                             <textarea class="form-control" id="arena-facilities" rows="3" placeholder="e.g., Air conditioned, Refreshments, Parking"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="arena-images" class="form-label">Upload Images</label>
+                            <input type="file" class="form-control" id="arena-images" multiple accept="image/*">
+                            <div class="form-text">You can select multiple images</div>
                         </div>
                         <div class="d-flex justify-content-end">
                             <button type="button" class="btn btn-outline-secondary me-2" onclick="hideAddArenaForm()">Cancel</button>
@@ -565,21 +721,21 @@
         <!-- Matches Section -->
         <div id="matches-section" class="section">
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2><i class="bi bi-calendar-event"></i> Ongoing Matches</h2>
+                <h2 class="fw-bold text-primary"><i class="bi bi-calendar-event"></i> Ongoing Matches</h2>
                 <button class="btn btn-primary" id="add-match-btn" onclick="showAddMatchForm()">
                     <i class="bi bi-plus-circle"></i> Create Match
                 </button>
             </div>
             
-            <div id="add-match-form" style="display: none;" class="card mb-4">
-                <div class="card-header">
+            <div id="add-match-form" style="display: none;" class="card mb-4 border-0 shadow-sm">
+                <div class="card-header bg-primary text-white">
                     <h5 class="mb-0"><i class="bi bi-plus-circle"></i> Create New Match</h5>
                 </div>
                 <div class="card-body">
                     <form id="match-form">
                         <div class="mb-3">
                             <label for="match-title" class="form-label">Match Title</label>
-                            <input type="text" class="form-control" id="match-title" required>
+                            <input type="text" class="form-control" id="match-title" placeholder="e.g., Weekend Cricket Fun" required>
                         </div>
                         <div class="mb-3">
                             <label for="match-arena" class="form-label">Arena</label>
@@ -599,20 +755,18 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label for="match-overs" class="form-label">Overs per Innings</label>
-                            <select class="form-select" id="match-overs" required>
-                                <option value="2">2 Overs</option>
-                                <option value="3">3 Overs</option>
-                                <option value="4">4 Overs</option>
-                                <option value="5">5 Overs</option>
-                                <option value="6">6 Overs</option>
-                                <option value="7">7 Overs</option>
-                                <option value="8">8 Overs</option>
-                            </select>
+                            <label for="match-players-needed" class="form-label">Players Needed</label>
+                            <input type="number" class="form-control" id="match-players-needed" min="1" max="20" required>
                         </div>
                         <div class="mb-3">
-                            <label for="match-players-needed" class="form-label">Players Needed</label>
-                            <input type="number" class="form-control" id="match-players-needed" min="1" max="11" required>
+                            <label for="match-requirements" class="form-label">Player Requirements</label>
+                            <select class="form-select" id="match-requirements" multiple>
+                                <option value="batsman">Batsmen</option>
+                                <option value="bowler">Bowlers</option>
+                                <option value="all-rounder">All-rounders</option>
+                                <option value="wicketkeeper">Wicketkeeper</option>
+                            </select>
+                            <div class="form-text">Hold Ctrl/Cmd to select multiple options</div>
                         </div>
                         <div class="mb-3">
                             <label for="match-contact" class="form-label">Contact Number</label>
@@ -620,7 +774,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="match-notes" class="form-label">Additional Notes</label>
-                            <textarea class="form-control" id="match-notes" rows="3"></textarea>
+                            <textarea class="form-control" id="match-notes" rows="3" placeholder="Any special instructions or details"></textarea>
                         </div>
                         <div class="d-flex justify-content-end">
                             <button type="button" class="btn btn-outline-secondary me-2" onclick="hideAddMatchForm()">Cancel</button>
@@ -649,300 +803,83 @@
         <!-- Teams Section -->
         <div id="teams-section" class="section">
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2><i class="bi bi-people"></i> Find a Team</h2>
+                <h2 class="fw-bold text-primary"><i class="bi bi-people"></i> Teams</h2>
                 <button class="btn btn-primary" id="add-team-btn" onclick="showAddTeamForm()">
-                    <i class="bi bi-plus-circle"></i> Add Your Team
+                    <i class="bi bi-plus-circle"></i> Create Team
                 </button>
             </div>
             
-            <div id="add-team-form" style="display: none;" class="card mb-4">
-                <div class="card-header">
-                    <h5 class="mb-0"><i class="bi bi-plus-circle"></i> Add Your Team</h5>
-                </div>
-                <div class="card-body">
-                    <form id="team-form">
-                        <div class="mb-3">
-                            <label for="team-name" class="form-label">Team Name</label>
-                            <input type="text" class="form-control" id="team-name" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="team-players" class="form-label">Current Players (comma separated)</label>
-                            <input type="text" class="form-control" id="team-players" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="team-players-needed" class="form-label">Players Needed</label>
-                            <input type="number" class="form-control" id="team-players-needed" min="1" max="11" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="team-skill" class="form-label">Team Skill Level</label>
-                            <select class="form-select" id="team-skill" required>
-                                <option value="beginner">Beginner</option>
-                                <option value="intermediate">Intermediate</option>
-                                <option value="advanced">Advanced</option>
-                                <option value="professional">Professional</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="team-contact" class="form-label">Contact Number</label>
-                            <input type="tel" class="form-control" id="team-contact" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="team-notes" class="form-label">Additional Notes</label>
-                            <textarea class="form-control" id="team-notes" rows="3"></textarea>
-                        </div>
-                        <div class="d-flex justify-content-end">
-                            <button type="button" class="btn btn-outline-secondary me-2" onclick="hideAddTeamForm()">Cancel</button>
-                            <button type="submit" class="btn btn-primary">Add Team</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
+            <ul class="nav nav-tabs" id="teamsTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="my-teams-tab" data-bs-toggle="tab" data-bs-target="#my-teams" type="button" role="tab">My Teams</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="other-teams-tab" data-bs-toggle="tab" data-bs-target="#other-teams" type="button" role="tab">Other Teams</button>
+                </li>
+            </ul>
             
-            <div id="teams-list" class="row">
-                <!-- Teams will be loaded here -->
-                <div class="col-12 text-center py-5">
-                    <div class="spinner-border text-primary" role="status">
-                        <span class="visually-hidden">Loading...</span>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="text-center mt-3">
-                <button class="btn btn-outline-primary" onclick="showSection('home-section')">
-                    <i class="bi bi-arrow-left"></i> Back to Home
-                </button>
-            </div>
-        </div>
-
-        <!-- Scoreboard Section -->
-        <div id="scoreboard-section" class="section">
-            <h2 class="mb-4"><i class="bi bi-clipboard-data"></i> My Scoreboard</h2>
-            
-            <div class="card mb-4">
-                <div class="card-header">
-                    <h5 class="mb-0"><i class="bi bi-calendar-date"></i> Match Days</h5>
-                </div>
-                <div class="card-body">
-                    <button class="btn btn-primary mb-3" onclick="showAddMatchDayForm()">
-                        <i class="bi bi-plus-circle"></i> Add Match Day
-                    </button>
-                    
-                    <div id="add-matchday-form" style="display: none;" class="mb-4">
-                        <form id="matchday-form" class="row g-3">
-                            <div class="col-md-6">
-                                <label for="matchday-name" class="form-label">Match Day Name</label>
-                                <input type="text" class="form-control" id="matchday-name" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="matchday-date" class="form-label">Date</label>
-                                <input type="date" class="form-control" id="matchday-date" required>
-                            </div>
-                            <div class="col-12">
-                                <button type="button" class="btn btn-outline-secondary me-2" onclick="hideAddMatchDayForm()">Cancel</button>
-                                <button type="submit" class="btn btn-primary">Create</button>
-                            </div>
-                        </form>
+            <div class="tab-content" id="teamsTabContent">
+                <div class="tab-pane fade show active" id="my-teams" role="tabpanel">
+                    <div id="add-team-form" style="display: none;" class="card mb-4 border-0 shadow-sm">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0"><i class="bi bi-plus-circle"></i> Create Your Team</h5>
+                        </div>
+                        <div class="card-body">
+                            <form id="team-form">
+                                <div class="mb-3">
+                                    <label for="team-name" class="form-label">Team Name</label>
+                                    <input type="text" class="form-control" id="team-name" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="team-players" class="form-label">Current Players (comma separated)</label>
+                                    <input type="text" class="form-control" id="team-players" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="team-players-needed" class="form-label">Players Needed</label>
+                                    <input type="number" class="form-control" id="team-players-needed" min="1" max="11" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="team-skill" class="form-label">Team Skill Level</label>
+                                    <select class="form-select" id="team-skill" required>
+                                        <option value="beginner">Beginner</option>
+                                        <option value="intermediate">Intermediate</option>
+                                        <option value="advanced">Advanced</option>
+                                        <option value="professional">Professional</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="team-contact" class="form-label">Contact Number</label>
+                                    <input type="tel" class="form-control" id="team-contact" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="team-notes" class="form-label">Team Description</label>
+                                    <textarea class="form-control" id="team-notes" rows="3" placeholder="Tell us about your team"></textarea>
+                                </div>
+                                <div class="d-flex justify-content-end">
+                                    <button type="button" class="btn btn-outline-secondary me-2" onclick="hideAddTeamForm()">Cancel</button>
+                                    <button type="submit" class="btn btn-primary">Create Team</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                     
-                    <div id="matchdays-list">
-                        <!-- Match days will be loaded here -->
-                        <div class="text-center py-5">
+                    <div id="my-teams-list" class="row">
+                        <!-- User's teams will be loaded here -->
+                        <div class="col-12 text-center py-5">
                             <div class="spinner-border text-primary" role="status">
                                 <span class="visually-hidden">Loading...</span>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            
-            <div id="matchday-matches" style="display: none;">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h4><i class="bi bi-calendar-date"></i> Match Day: <span id="matchday-title"></span></h4>
-                    <button class="btn btn-primary" onclick="showAddMatchToDayForm()">
-                        <i class="bi bi-plus-circle"></i> Add Match
-                    </button>
-                </div>
                 
-                <div id="add-match-to-day-form" style="display: none;" class="card mb-4">
-                    <div class="card-header">
-                        <h5 class="mb-0"><i class="bi bi-plus-circle"></i> Add New Match</h5>
-                    </div>
-                    <div class="card-body">
-                        <form id="match-to-day-form">
-                            <div class="mb-3">
-                                <label for="match-team1" class="form-label">Team 1 Name</label>
-                                <input type="text" class="form-control" id="match-team1" required>
+                <div class="tab-pane fade" id="other-teams" role="tabpanel">
+                    <div id="other-teams-list" class="row">
+                        <!-- Other teams will be loaded here -->
+                        <div class="col-12 text-center py-5">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
                             </div>
-                            <div class="mb-3">
-                                <label for="match-team2" class="form-label">Team 2 Name</label>
-                                <input type="text" class="form-control" id="match-team2" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="match-overs" class="form-label">Overs</label>
-                                <select class="form-select" id="match-overs" required>
-                                    <option value="2">2 Overs</option>
-                                    <option value="3">3 Overs</option>
-                                    <option value="4">4 Overs</option>
-                                    <option value="5">5 Overs</option>
-                                    <option value="6">6 Overs</option>
-                                    <option value="7">7 Overs</option>
-                                    <option value="8">8 Overs</option>
-                                </select>
-                            </div>
-                            <div class="d-flex justify-content-end">
-                                <button type="button" class="btn btn-outline-secondary me-2" onclick="hideAddMatchToDayForm()">Cancel</button>
-                                <button type="submit" class="btn btn-primary">Create Match</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                
-                <div id="matches-for-day-list">
-                    <!-- Matches for selected day will be loaded here -->
-                </div>
-                
-                <div class="text-center mt-3">
-                    <button class="btn btn-outline-primary" onclick="backToScoreboard()">
-                        <i class="bi bi-arrow-left"></i> Back to Match Days
-                    </button>
-                </div>
-            </div>
-            
-            <div id="scorecard-section" style="display: none;">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h4><i class="bi bi-clipboard-data"></i> Match: <span id="match-title"></span></h4>
-                    <button class="btn btn-outline-primary" onclick="backToMatchesForDay()">
-                        <i class="bi bi-arrow-left"></i> Back to Matches
-                    </button>
-                </div>
-                
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <h5 class="mb-0">Score Summary</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="row text-center">
-                            <div class="col-md-6 mb-3">
-                                <div class="p-3 bg-light rounded">
-                                    <h5 id="team1-name">Team 1</h5>
-                                    <div class="score-display">
-                                        <span id="team1-runs">0</span>/<span id="team1-wickets">0</span>
-                                    </div>
-                                    <p>Overs: <span id="team1-overs">0</span></p>
-                                </div>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <div class="p-3 bg-light rounded">
-                                    <h5 id="team2-name">Team 2</h5>
-                                    <div class="score-display">
-                                        <span id="team2-runs">0</span>/<span id="team2-wickets">0</span>
-                                    </div>
-                                    <p>Overs: <span id="team2-overs">0</span></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <ul class="nav nav-tabs" id="scorecardTabs" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="batsmen-tab" data-bs-toggle="tab" data-bs-target="#batsmen" type="button" role="tab">Batsmen</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="bowlers-tab" data-bs-toggle="tab" data-bs-target="#bowlers" type="button" role="tab">Bowlers</button>
-                    </li>
-                </ul>
-                
-                <div class="tab-content" id="scorecardTabContent">
-                    <div class="tab-pane fade show active" id="batsmen" role="tabpanel">
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Batsman</th>
-                                        <th>R</th>
-                                        <th>B</th>
-                                        <th>4s</th>
-                                        <th>6s</th>
-                                        <th>SR</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="batsmen-list">
-                                    <!-- Batsmen will be loaded here -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade" id="bowlers" role="tabpanel">
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Bowler</th>
-                                        <th>O</th>
-                                        <th>M</th>
-                                        <th>R</th>
-                                        <th>W</th>
-                                        <th>Econ</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="bowlers-list">
-                                    <!-- Bowlers will be loaded here -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="card mt-4">
-                    <div class="card-header">
-                        <h5 class="mb-0">Ball by Ball</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="row mb-4">
-                            <div class="col-md-6 mb-3">
-                                <div class="p-3 bg-light rounded">
-                                    <label class="form-label">Current Innings</label>
-                                    <h4 id="current-innings">1st Innings</h4>
-                                </div>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <div class="p-3 bg-light rounded">
-                                    <label class="form-label">Current Over</label>
-                                    <h4 id="current-over">0.0</h4>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="mb-4">
-                            <h6 class="mb-3">Record Ball:</h6>
-                            <div class="d-flex flex-wrap justify-content-center">
-                                <button class="ball-btn btn dot" onclick="recordBall(0)">0</button>
-                                <button class="ball-btn btn btn-primary" onclick="recordBall(1)">1</button>
-                                <button class="ball-btn btn btn-primary" onclick="recordBall(2)">2</button>
-                                <button class="ball-btn btn btn-primary" onclick="recordBall(3)">3</button>
-                                <button class="ball-btn btn btn-primary" onclick="recordBall(4)">4</button>
-                                <button class="ball-btn btn btn-primary" onclick="recordBall(6)">6</button>
-                                <button class="ball-btn btn wicket" onclick="recordBall('W')">W</button>
-                                <button class="ball-btn btn wide" onclick="recordBall('Wd')">Wd</button>
-                            </div>
-                        </div>
-                        
-                        <div class="mb-4">
-                            <label class="form-label">Current Over Balls:</label>
-                            <div id="current-over-balls" class="d-flex flex-wrap gap-2">
-                                <!-- Balls will be shown here -->
-                            </div>
-                        </div>
-                        
-                        <div class="d-flex justify-content-center gap-3">
-                            <button class="btn btn-primary" onclick="endOver()">
-                                <i class="bi bi-arrow-right-circle"></i> End Over
-                            </button>
-                            <button class="btn btn-outline-primary" onclick="switchInnings()">
-                                <i class="bi bi-arrow-left-right"></i> Switch Innings
-                            </button>
                         </div>
                     </div>
                 </div>
@@ -956,10 +893,16 @@
         </div>
     </div>
 
+    <!-- Floating action button for mobile -->
+    <div class="floating-btn d-lg-none" onclick="scrollToTop()">
+        <i class="bi bi-arrow-up"></i>
+    </div>
+
     <!-- Firebase and other JS -->
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-storage-compat.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
     <script>
@@ -979,16 +922,11 @@
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
         const auth = firebase.auth();
+        const storage = firebase.storage();
 
         // Global variables
         let currentUser = null;
-        let currentMatchDayId = null;
-        let currentMatchId = null;
-        let currentInnings = 1;
-        let currentOver = 0;
-        let currentBall = 0;
-        let currentOverBalls = [];
-        let matchData = {};
+        let currentUserData = null;
 
         // DOM Content Loaded
         document.addEventListener('DOMContentLoaded', function() {
@@ -1001,11 +939,9 @@
             document.getElementById('arena-form').addEventListener('submit', addArena);
             document.getElementById('match-form').addEventListener('submit', addMatch);
             document.getElementById('team-form').addEventListener('submit', addTeam);
-            document.getElementById('matchday-form').addEventListener('submit', addMatchDay);
-            document.getElementById('match-to-day-form').addEventListener('submit', addMatchToDay);
             
             // Initialize Bootstrap tabs
-            const scorecardTabs = new bootstrap.Tab(document.getElementById('batsmen-tab'));
+            const teamsTabs = new bootstrap.Tab(document.getElementById('my-teams-tab'));
             
             // Load initial data
             loadArenas();
@@ -1020,13 +956,17 @@
                     currentUser = user;
                     document.getElementById('auth-nav').style.display = 'none';
                     document.getElementById('profile-nav').style.display = 'block';
-                    document.getElementById('user-name-nav').textContent = user.displayName || user.email.split('@')[0];
                     document.getElementById('main-nav').style.display = 'flex';
                     
-                    // Load user profile
-                    loadUserProfile();
-                    // Load user's scoreboard
-                    loadMatchDays();
+                    // Load user data
+                    loadUserData().then(() => {
+                        document.getElementById('user-name-nav').textContent = currentUserData.name || user.email.split('@')[0];
+                        
+                        // Show add arena button only for ground owners
+                        if (currentUserData.userType === 'owner') {
+                            document.getElementById('add-arena-btn').style.display = 'block';
+                        }
+                    });
                     
                     // Show home section if not already viewing a section
                     if (!document.querySelector('.section.active-section')) {
@@ -1034,11 +974,32 @@
                     }
                 } else {
                     currentUser = null;
+                    currentUserData = null;
                     document.getElementById('auth-nav').style.display = 'flex';
                     document.getElementById('profile-nav').style.display = 'none';
                     document.getElementById('main-nav').style.display = 'none';
+                    document.getElementById('add-arena-btn').style.display = 'none';
                     showSection('login-section');
                 }
+            });
+        }
+
+        function loadUserData() {
+            return new Promise((resolve, reject) => {
+                if (!currentUser) {
+                    reject('No user logged in');
+                    return;
+                }
+                
+                database.ref('users/' + currentUser.uid).once('value')
+                    .then(snapshot => {
+                        currentUserData = snapshot.val();
+                        resolve();
+                    })
+                    .catch(error => {
+                        console.error('Error loading user data:', error);
+                        reject(error);
+                    });
             });
         }
 
@@ -1062,20 +1023,36 @@
             const password = document.getElementById('signup-password').value;
             const name = document.getElementById('signup-name').value;
             const phone = document.getElementById('signup-phone').value;
-            const skill = document.getElementById('signup-skill').value;
-            const role = document.getElementById('signup-role').value;
+            const userType = document.getElementById('user-type').value;
+            
+            // Validate user type selection
+            if (!userType) {
+                alert('Please select a user type (Player or Ground Owner)');
+                return;
+            }
             
             auth.createUserWithEmailAndPassword(email, password)
                 .then((userCredential) => {
-                    // Save additional user data to database
-                    return database.ref('users/' + userCredential.user.uid).set({
+                    // Prepare user data based on type
+                    const userData = {
                         name: name,
                         email: email,
                         phone: phone,
-                        skill: skill,
-                        role: role,
+                        userType: userType,
                         createdAt: firebase.database.ServerValue.TIMESTAMP
-                    });
+                    };
+                    
+                    // Add additional fields based on user type
+                    if (userType === 'player') {
+                        userData.skill = document.getElementById('signup-skill').value;
+                        userData.role = document.getElementById('signup-role').value;
+                    } else if (userType === 'owner') {
+                        userData.businessName = document.getElementById('signup-business').value;
+                        userData.taxId = document.getElementById('signup-tax').value;
+                    }
+                    
+                    // Save user data to database
+                    return database.ref('users/' + userCredential.user.uid).set(userData);
                 })
                 .then(() => {
                     showSection('home-section');
@@ -1092,51 +1069,60 @@
         }
 
         function loadUserProfile() {
-            if (!currentUser) return;
+            if (!currentUser || !currentUserData) return;
             
-            database.ref('users/' + currentUser.uid).once('value')
-                .then(snapshot => {
-                    const userData = snapshot.val();
-                    if (userData) {
-                        document.getElementById('profile-name').textContent = userData.name;
-                        document.getElementById('profile-email').textContent = userData.email;
-                        document.getElementById('profile-phone').textContent = userData.phone || 'Not provided';
-                        document.getElementById('profile-skill').textContent = userData.skill || 'Not provided';
-                        document.getElementById('profile-role').textContent = userData.role || 'Not provided';
-                        document.getElementById('user-name-nav').textContent = userData.name || userData.email.split('@')[0];
-                        
-                        // Update profile stats
-                        updateProfileStats();
-                    }
-                });
+            document.getElementById('profile-name').textContent = currentUserData.name;
+            document.getElementById('profile-email').textContent = currentUserData.email;
+            document.getElementById('profile-phone').textContent = currentUserData.phone || 'Not provided';
+            document.getElementById('profile-type').textContent = currentUserData.userType === 'player' ? 'Player' : 'Ground Owner';
+            
+            // Show/hide fields based on user type
+            if (currentUserData.userType === 'player') {
+                document.getElementById('profile-skill-container').style.display = 'block';
+                document.getElementById('profile-role-container').style.display = 'block';
+                document.getElementById('profile-business-container').style.display = 'none';
+                
+                document.getElementById('profile-skill').textContent = currentUserData.skill || 'Not provided';
+                document.getElementById('profile-role').textContent = currentUserData.role || 'Not provided';
+            } else {
+                document.getElementById('profile-skill-container').style.display = 'none';
+                document.getElementById('profile-role-container').style.display = 'none';
+                document.getElementById('profile-business-container').style.display = 'block';
+                
+                document.getElementById('profile-business').textContent = currentUserData.businessName || 'Not provided';
+            }
+            
+            // Update profile stats
+            updateProfileStats();
         }
 
         function updateProfileStats() {
             if (!currentUser) return;
             
             // Count matches participated in
-            database.ref('matches').orderByChild('players/' + currentUser.uid).equalTo(true).once('value')
+            database.ref('matches').orderByChild('createdBy').equalTo(currentUser.uid).once('value')
                 .then(snapshot => {
                     const count = snapshot.numChildren();
                     document.getElementById('profile-matches').textContent = count;
                 });
             
-            // Count teams joined
-            database.ref('teams').orderByChild('players/' + currentUser.uid).equalTo(true).once('value')
+            // Count teams joined/created
+            database.ref('teams').orderByChild('ownerId').equalTo(currentUser.uid).once('value')
                 .then(snapshot => {
                     const count = snapshot.numChildren();
                     document.getElementById('profile-teams').textContent = count;
                 });
             
-            // Count arenas visited (simplified - just count matches at different arenas)
-            database.ref('matches').orderByChild('players/' + currentUser.uid).equalTo(true).once('value')
-                .then(snapshot => {
-                    const arenas = new Set();
-                    snapshot.forEach(match => {
-                        arenas.add(match.val().arenaId);
+            // Count arenas added (for owners)
+            if (currentUserData.userType === 'owner') {
+                database.ref('arenas').orderByChild('addedBy').equalTo(currentUser.uid).once('value')
+                    .then(snapshot => {
+                        const count = snapshot.numChildren();
+                        document.getElementById('profile-arenas').textContent = count;
                     });
-                    document.getElementById('profile-arenas').textContent = arenas.size;
-                });
+            } else {
+                document.getElementById('profile-arenas').textContent = '0';
+            }
         }
 
         // UI Functions
@@ -1163,8 +1149,37 @@
                 }
             }
             
+            // Load section-specific data
+            if (sectionId === 'profile-section') {
+                loadUserProfile();
+            } else if (sectionId === 'arenas-section') {
+                loadArenas();
+            } else if (sectionId === 'matches-section') {
+                loadMatches();
+            } else if (sectionId === 'teams-section') {
+                loadTeams();
+            }
+            
             // Scroll to top
             window.scrollTo(0, 0);
+        }
+
+        function selectUserType(type) {
+            document.getElementById('user-type').value = type;
+            
+            // Update UI
+            document.getElementById('player-type').classList.remove('active');
+            document.getElementById('owner-type').classList.remove('active');
+            document.getElementById(type + '-type').classList.add('active');
+            
+            // Show/hide fields based on type
+            if (type === 'player') {
+                document.getElementById('player-fields').style.display = 'block';
+                document.getElementById('owner-fields').style.display = 'none';
+            } else {
+                document.getElementById('player-fields').style.display = 'none';
+                document.getElementById('owner-fields').style.display = 'block';
+            }
         }
 
         function showAddArenaForm() {
@@ -1214,22 +1229,8 @@
             document.getElementById('team-form').reset();
         }
 
-        function showAddMatchDayForm() {
-            document.getElementById('add-matchday-form').style.display = 'block';
-        }
-
-        function hideAddMatchDayForm() {
-            document.getElementById('add-matchday-form').style.display = 'none';
-            document.getElementById('matchday-form').reset();
-        }
-
-        function showAddMatchToDayForm() {
-            document.getElementById('add-match-to-day-form').style.display = 'block';
-        }
-
-        function hideAddMatchToDayForm() {
-            document.getElementById('add-match-to-day-form').style.display = 'none';
-            document.getElementById('match-to-day-form').reset();
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         // Data Loading Functions
@@ -1253,10 +1254,51 @@
                     const arenaData = arena.val();
                     const arenaCard = document.createElement('div');
                     arenaCard.className = 'col-md-6 col-lg-4';
+                    
+                    // Create carousel for images if available
+                    let carouselHtml = '';
+                    if (arenaData.images && arenaData.images.length > 0) {
+                        carouselHtml = `
+                            <div id="arenaCarousel-${arena.key}" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-inner">
+                        `;
+                        
+                        arenaData.images.forEach((img, index) => {
+                            carouselHtml += `
+                                <div class="carousel-item ${index === 0 ? 'active' : ''}">
+                                    <img src="${img}" class="d-block w-100" alt="Arena image ${index + 1}">
+                                </div>
+                            `;
+                        });
+                        
+                        carouselHtml += `
+                                </div>
+                                ${arenaData.images.length > 1 ? `
+                                <button class="carousel-control-prev" type="button" data-bs-target="#arenaCarousel-${arena.key}" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#arenaCarousel-${arena.key}" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                                ` : ''}
+                            </div>
+                        `;
+                    } else {
+                        // Default image if no images available
+                        carouselHtml = `
+                            <div class="bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                                <i class="bi bi-image text-muted" style="font-size: 3rem;"></i>
+                            </div>
+                        `;
+                    }
+                    
                     arenaCard.innerHTML = `
-                        <div class="card arena-card">
+                        <div class="card arena-card border-0 shadow-sm h-100">
+                            ${carouselHtml}
                             <div class="card-body">
-                                <h5 class="card-title">
+                                <h5 class="card-title fw-bold">
                                     <i class="bi bi-geo-alt"></i> ${arenaData.name}
                                 </h5>
                                 <p class="card-text">
@@ -1268,10 +1310,13 @@
                                 <p class="card-text">
                                     <i class="bi bi-clock"></i> ${arenaData.hours}
                                 </p>
+                                <p class="card-text">
+                                    <i class="bi bi-currency-exchange"></i> PKR ${arenaData.rates}/hour
+                                </p>
                                 ${arenaData.facilities ? `
                                 <div class="mt-2">
-                                    <span class="badge bg-light text-dark me-1">
-                                        <i class="bi bi-info-circle"></i> Facilities
+                                    <span class="badge bg-light text-dark me-1 mb-1">
+                                        <i class="bi-info-circle"></i> Facilities
                                     </span>
                                     <small class="text-muted">${arenaData.facilities}</small>
                                 </div>
@@ -1300,25 +1345,35 @@
                     return;
                 }
                 
+                const now = Date.now();
+                
                 snapshot.forEach(match => {
                     const matchData = match.val();
                     const matchDate = new Date(matchData.timestamp);
                     const formattedDate = matchDate.toLocaleDateString();
                     const formattedTime = matchDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
                     
+                    // Check if match has expired
+                    const isExpired = matchData.timestamp < now;
+                    
                     const matchCard = document.createElement('div');
                     matchCard.className = 'col-md-6 col-lg-4';
                     matchCard.innerHTML = `
-                        <div class="card match-card">
+                        <div class="card match-card border-0 shadow-sm h-100">
                             <div class="card-body">
-                                <h5 class="card-title">
-                                    <i class="bi bi-calendar-event"></i> ${matchData.title}
-                                </h5>
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h5 class="card-title fw-bold">
+                                        <i class="bi bi-calendar-event"></i> ${matchData.title}
+                                    </h5>
+                                    <span class="countdown-badge ${isExpired ? 'expired-badge' : ''}">
+                                        ${isExpired ? 'Expired' : 'Upcoming'}
+                                    </span>
+                                </div>
                                 <div class="mb-2">
-                                    <span class="badge bg-primary me-1">
+                                    <span class="badge bg-primary me-1 mb-1">
                                         <i class="bi bi-geo-alt"></i> ${matchData.arenaName}
                                     </span>
-                                    <span class="badge bg-success">
+                                    <span class="badge bg-success me-1 mb-1">
                                         <i class="bi bi-clock"></i> ${formattedTime}
                                     </span>
                                 </div>
@@ -1326,11 +1381,14 @@
                                     <i class="bi bi-calendar"></i> ${formattedDate}
                                 </p>
                                 <p class="card-text">
-                                    <i class="bi bi-arrow-repeat"></i> ${matchData.overs} overs match
-                                </p>
-                                <p class="card-text">
                                     <i class="bi bi-people"></i> ${matchData.playersNeeded} players needed
                                 </p>
+                                ${matchData.requirements && matchData.requirements.length > 0 ? `
+                                <div class="mb-2">
+                                    <span class="badge bg-light text-dark me-1 mb-1">Requirements</span>
+                                    <small>${matchData.requirements.join(', ')}</small>
+                                </div>
+                                ` : ''}
                                 <p class="card-text">
                                     <i class="bi bi-telephone"></i> ${matchData.contact}
                                 </p>
@@ -1339,340 +1397,169 @@
                                     <small>${matchData.notes}</small>
                                 </div>
                                 ` : ''}
-                                <button class="btn btn-sm btn-primary w-100">
-                                    <i class="bi bi-person-plus"></i> Join Match
+                                <button class="btn btn-sm btn-primary w-100 mt-2" ${isExpired ? 'disabled' : ''}>
+                                    <i class="bi bi-person-plus"></i> ${isExpired ? 'Match Expired' : 'Join Match'}
                                 </button>
                             </div>
                         </div>
                     `;
                     matchesList.appendChild(matchCard);
+                    
+                    // Remove expired matches
+                    if (isExpired) {
+                        // In a real app, you might want to archive instead of delete
+                        // database.ref('matches/' + match.key).remove();
+                    }
                 });
             });
         }
 
         function loadTeams() {
-            database.ref('teams').on('value', snapshot => {
-                const teamsList = document.getElementById('teams-list');
-                teamsList.innerHTML = '';
+            if (!currentUser) return;
+            
+            // Load user's teams
+            database.ref('teams').orderByChild('ownerId').equalTo(currentUser.uid).on('value', snapshot => {
+                const myTeamsList = document.getElementById('my-teams-list');
+                myTeamsList.innerHTML = '';
                 
                 if (!snapshot.exists()) {
-                    teamsList.innerHTML = `
+                    myTeamsList.innerHTML = `
+                        <div class="col-12 text-center py-4">
+                            <i class="bi bi-info-circle" style="font-size: 2rem;"></i>
+                            <h5 class="mt-3">You haven't created any teams yet</h5>
+                            <p>Create your first team to get started!</p>
+                        </div>
+                    `;
+                } else {
+                    snapshot.forEach(team => {
+                        const teamData = team.val();
+                        const teamCard = createTeamCard(team.key, teamData, true);
+                        myTeamsList.appendChild(teamCard);
+                    });
+                }
+            });
+            
+            // Load other teams
+            database.ref('teams').orderByChild('ownerId').on('value', snapshot => {
+                const otherTeamsList = document.getElementById('other-teams-list');
+                otherTeamsList.innerHTML = '';
+                
+                if (!snapshot.exists()) {
+                    otherTeamsList.innerHTML = `
                         <div class="col-12 text-center py-4">
                             <i class="bi bi-info-circle" style="font-size: 2rem;"></i>
                             <h5 class="mt-3">No teams found</h5>
-                            <p>Create your team and challenge others!</p>
+                            <p>Be the first to create a team!</p>
                         </div>
                     `;
-                    return;
+                } else {
+                    snapshot.forEach(team => {
+                        // Only show teams not owned by current user
+                        if (team.val().ownerId !== currentUser.uid) {
+                            const teamCard = createTeamCard(team.key, team.val(), false);
+                            otherTeamsList.appendChild(teamCard);
+                        }
+                    });
                 }
-                
-                snapshot.forEach(team => {
-                    const teamData = team.val();
-                    const teamCard = document.createElement('div');
-                    teamCard.className = 'col-md-6 col-lg-4';
-                    teamCard.innerHTML = `
-                        <div class="card team-card">
-                            <div class="card-body">
-                                <h5 class="card-title">
-                                    <i class="bi bi-people"></i> ${teamData.name}
-                                </h5>
-                                <p class="card-text">
-                                    <i class="bi bi-person-check"></i> Players: ${teamData.players}
-                                </p>
-                                <p class="card-text">
-                                    <i class="bi bi-person-plus"></i> Needed: ${teamData.playersNeeded}
-                                </p>
-                                <p class="card-text">
-                                    <i class="bi bi-star"></i> Skill: ${teamData.skill}
-                                </p>
-                                <p class="card-text">
-                                    <i class="bi bi-telephone"></i> Contact: ${teamData.contact}
-                                </p>
-                                ${teamData.notes ? `
-                                <div class="alert alert-light mt-2">
-                                    <small>${teamData.notes}</small>
-                                </div>
-                                ` : ''}
-                                <button class="btn btn-sm btn-primary w-100">
-                                    <i class="bi bi-send"></i> Challenge Team
-                                </button>
-                            </div>
-                        </div>
-                    `;
-                    teamsList.appendChild(teamCard);
-                });
             });
         }
 
-        function loadMatchDays() {
-            if (!currentUser) return;
+        function createTeamCard(teamId, teamData, isOwner) {
+            const teamCard = document.createElement('div');
+            teamCard.className = 'col-md-6 col-lg-4';
             
-            database.ref('users/' + currentUser.uid + '/matchDays').on('value', snapshot => {
-                const matchdaysList = document.getElementById('matchdays-list');
-                matchdaysList.innerHTML = '';
-                
-                if (!snapshot.exists()) {
-                    matchdaysList.innerHTML = `
-                        <div class="col-12 text-center py-4">
-                            <i class="bi bi-info-circle" style="font-size: 2rem;"></i>
-                            <h5 class="mt-3">No match days yet</h5>
-                            <p>Add your first match day to start tracking scores!</p>
+            teamCard.innerHTML = `
+                <div class="card team-card border-0 shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">
+                            <i class="bi bi-people"></i> ${teamData.name}
+                        </h5>
+                        <p class="card-text">
+                            <i class="bi bi-person-check"></i> Players: ${teamData.players}
+                        </p>
+                        <p class="card-text">
+                            <i class="bi bi-person-plus"></i> Needed: ${teamData.playersNeeded}
+                        </p>
+                        <p class="card-text">
+                            <i class="bi bi-star"></i> Skill: ${teamData.skill}
+                        </p>
+                        <p class="card-text">
+                            <i class="bi bi-telephone"></i> Contact: ${teamData.contact}
+                        </p>
+                        ${teamData.notes ? `
+                        <div class="alert alert-light mt-2">
+                            <small>${teamData.notes}</small>
                         </div>
-                    `;
-                    return;
-                }
-                
-                snapshot.forEach(matchday => {
-                    const matchdayData = matchday.val();
-                    const matchdayDate = new Date(matchdayData.date);
-                    const formattedDate = matchdayDate.toLocaleDateString();
-                    
-                    const matchdayItem = document.createElement('div');
-                    matchdayItem.className = 'd-flex justify-content-between align-items-center mb-3 p-3 bg-light rounded';
-                    matchdayItem.innerHTML = `
-                        <div>
-                            <h5 class="mb-1">${matchdayData.name}</h5>
-                            <small class="text-muted">
-                                <i class="bi bi-calendar"></i> ${formattedDate}
-                            </small>
-                        </div>
-                        <div>
-                            <button class="btn btn-sm btn-primary me-1" onclick="viewMatchDay('${matchday.key}')">
-                                <i class="bi bi-eye"></i> View
-                            </button>
-                            <button class="btn btn-sm btn-outline-danger" onclick="deleteMatchDay('${matchday.key}')">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </div>
-                    `;
-                    matchdaysList.appendChild(matchdayItem);
-                });
-            });
-        }
-
-        function viewMatchDay(matchDayId) {
-            currentMatchDayId = matchDayId;
+                        ` : ''}
+                        ${isOwner ? `
+                        <button class="btn btn-sm btn-outline-primary w-100 mt-2">
+                            <i class="bi bi-pencil"></i> Edit Team
+                        </button>
+                        ` : `
+                        <button class="btn btn-sm btn-primary w-100 mt-2">
+                            <i class="bi bi-send"></i> Contact Team
+                        </button>
+                        `}
+                    </div>
+                </div>
+            `;
             
-            database.ref('users/' + currentUser.uid + '/matchDays/' + matchDayId).once('value')
-                .then(snapshot => {
-                    const matchDayData = snapshot.val();
-                    document.getElementById('matchday-title').textContent = matchDayData.name;
-                    
-                    // Load matches for this day
-                    loadMatchesForDay(matchDayId);
-                    
-                    // Show matches section
-                    document.getElementById('matchday-matches').style.display = 'block';
-                    document.getElementById('scorecard-section').style.display = 'none';
-                });
-        }
-
-        function backToScoreboard() {
-            document.getElementById('matchday-matches').style.display = 'none';
-            loadMatchDays(); // Refresh the list
-        }
-
-        function loadMatchesForDay(matchDayId) {
-            database.ref('users/' + currentUser.uid + '/matchDays/' + matchDayId + '/matches').on('value', snapshot => {
-                const matchesList = document.getElementById('matches-for-day-list');
-                matchesList.innerHTML = '';
-                
-                if (!snapshot.exists()) {
-                    matchesList.innerHTML = `
-                        <div class="col-12 text-center py-4">
-                            <i class="bi bi-info-circle" style="font-size: 2rem;"></i>
-                            <h5 class="mt-3">No matches yet</h5>
-                            <p>Add matches to this day to start tracking scores</p>
-                        </div>
-                    `;
-                    return;
-                }
-                
-                snapshot.forEach(match => {
-                    const matchData = match.val();
-                    const matchItem = document.createElement('div');
-                    matchItem.className = 'd-flex justify-content-between align-items-center mb-3 p-3 bg-light rounded';
-                    matchItem.innerHTML = `
-                        <div>
-                            <h5 class="mb-1">${matchData.team1} vs ${matchData.team2}</h5>
-                            <small class="text-muted">
-                                <i class="bi bi-arrow-repeat"></i> ${matchData.overs} overs match
-                            </small>
-                        </div>
-                        <div>
-                            <button class="btn btn-sm btn-primary me-1" onclick="viewMatch('${matchDayId}', '${match.key}')">
-                                <i class="bi bi-clipboard-data"></i> Scorecard
-                            </button>
-                            <button class="btn btn-sm btn-outline-danger" onclick="deleteMatch('${matchDayId}', '${match.key}')">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </div>
-                    `;
-                    matchesList.appendChild(matchItem);
-                });
-            });
-        }
-
-        function viewMatch(matchDayId, matchId) {
-            currentMatchDayId = matchDayId;
-            currentMatchId = matchId;
-            
-            database.ref('users/' + currentUser.uid + '/matchDays/' + matchDayId + '/matches/' + matchId).once('value')
-                .then(snapshot => {
-                    matchData = snapshot.val();
-                    
-                    // Initialize match data if not exists
-                    if (!matchData.scorecard) {
-                        matchData.scorecard = {
-                            team1: { runs: 0, wickets: 0, overs: 0, batsmen: [], bowlers: [] },
-                            team2: { runs: 0, wickets: 0, overs: 0, batsmen: [], bowlers: [] }
-                        };
-                    }
-                    
-                    if (matchData.currentInnings) currentInnings = matchData.currentInnings;
-                    if (matchData.currentOver) currentOver = matchData.currentOver;
-                    if (matchData.currentBall) currentBall = matchData.currentBall;
-                    if (matchData.currentOverBalls) currentOverBalls = matchData.currentOverBalls;
-                    
-                    // Update UI with match info
-                    document.getElementById('match-title').textContent = `${matchData.team1} vs ${matchData.team2}`;
-                    document.getElementById('team1-name').textContent = matchData.team1;
-                    document.getElementById('team2-name').textContent = matchData.team2;
-                    
-                    // Initialize default batsmen if empty
-                    if (matchData.scorecard.team1.batsmen.length === 0) {
-                        matchData.scorecard.team1.batsmen = [
-                            { name: "Batsman 1", runs: 0, balls: 0, fours: 0, sixes: 0, out: false },
-                            { name: "Batsman 2", runs: 0, balls: 0, fours: 0, sixes: 0, out: false }
-                        ];
-                    }
-                    
-                    if (matchData.scorecard.team2.batsmen.length === 0) {
-                        matchData.scorecard.team2.batsmen = [
-                            { name: "Batsman 1", runs: 0, balls: 0, fours: 0, sixes: 0, out: false },
-                            { name: "Batsman 2", runs: 0, balls: 0, fours: 0, sixes: 0, out: false }
-                        ];
-                    }
-                    
-                    // Initialize default bowlers if empty
-                    if (matchData.scorecard.team1.bowlers.length === 0) {
-                        matchData.scorecard.team1.bowlers = [
-                            { name: "Bowler 1", runs: 0, balls: 0, maidens: 0, wickets: 0 }
-                        ];
-                    }
-                    
-                    if (matchData.scorecard.team2.bowlers.length === 0) {
-                        matchData.scorecard.team2.bowlers = [
-                            { name: "Bowler 1", runs: 0, balls: 0, maidens: 0, wickets: 0 }
-                        ];
-                    }
-                    
-                    // Update score display
-                    updateScoreDisplay();
-                    
-                    // Show scorecard section
-                    document.getElementById('matchday-matches').style.display = 'none';
-                    document.getElementById('scorecard-section').style.display = 'block';
-                });
-        }
-
-        function backToMatchesForDay() {
-            document.getElementById('scorecard-section').style.display = 'none';
-            document.getElementById('matchday-matches').style.display = 'block';
-        }
-
-        function updateScoreDisplay() {
-            if (!matchData.scorecard) return;
-            
-            const team1 = matchData.scorecard.team1;
-            const team2 = matchData.scorecard.team2;
-            
-            document.getElementById('team1-runs').textContent = team1.runs;
-            document.getElementById('team1-wickets').textContent = team1.wickets;
-            document.getElementById('team1-overs').textContent = team1.overs;
-            
-            document.getElementById('team2-runs').textContent = team2.runs;
-            document.getElementById('team2-wickets').textContent = team2.wickets;
-            document.getElementById('team2-overs').textContent = team2.overs;
-            
-            // Update batsmen list
-            const batsmenList = document.getElementById('batsmen-list');
-            batsmenList.innerHTML = '';
-            
-            const currentTeam = currentInnings === 1 ? team1 : team2;
-            currentTeam.batsmen.forEach(batsman => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${batsman.name}</td>
-                    <td>${batsman.runs}</td>
-                    <td>${batsman.balls}</td>
-                    <td>${batsman.fours}</td>
-                    <td>${batsman.sixes}</td>
-                    <td>${batsman.balls > 0 ? ((batsman.runs / batsman.balls) * 100).toFixed(2) : '0.00'}</td>
-                    <td>${batsman.out ? batsman.out : 'not out'}</td>
-                `;
-                batsmenList.appendChild(row);
-            });
-            
-            // Update bowlers list
-            const bowlersList = document.getElementById('bowlers-list');
-            bowlersList.innerHTML = '';
-            
-            const bowlingTeam = currentInnings === 1 ? team2 : team1;
-            bowlingTeam.bowlers.forEach(bowler => {
-                const overs = Math.floor(bowler.balls / 6) + '.' + (bowler.balls % 6);
-                const economy = bowler.balls > 0 ? (bowler.runs / (bowler.balls / 6)).toFixed(2) : '0.00';
-                
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${bowler.name}</td>
-                    <td>${overs}</td>
-                    <td>${bowler.maidens}</td>
-                    <td>${bowler.runs}</td>
-                    <td>${bowler.wickets}</td>
-                    <td>${economy}</td>
-                `;
-                bowlersList.appendChild(row);
-            });
-            
-            // Update current innings display
-            document.getElementById('current-innings').textContent = currentInnings === 1 ? '1st Innings' : '2nd Innings';
-            document.getElementById('current-over').textContent = currentOver + '.' + currentBall;
-            
-            // Update current over balls display
-            const currentOverBallsDiv = document.getElementById('current-over-balls');
-            currentOverBallsDiv.innerHTML = '';
-            
-            currentOverBalls.forEach(ball => {
-                const ballSpan = document.createElement('span');
-                ballSpan.className = 'badge ' + 
-                    (ball === 'W' ? 'bg-danger' : 
-                     ball === 'Wd' ? 'bg-warning text-dark' : 'bg-primary');
-                ballSpan.textContent = ball;
-                currentOverBallsDiv.appendChild(ballSpan);
-            });
+            return teamCard;
         }
 
         // Data Addition Functions
         function addArena(e) {
             e.preventDefault();
-            if (!currentUser) return;
+            if (!currentUser || !currentUserData || currentUserData.userType !== 'owner') return;
             
             const name = document.getElementById('arena-name').value;
             const address = document.getElementById('arena-address').value;
             const phone = document.getElementById('arena-phone').value;
             const hours = document.getElementById('arena-hours').value;
+            const rates = document.getElementById('arena-rates').value;
             const facilities = document.getElementById('arena-facilities').value;
+            const imageFiles = document.getElementById('arena-images').files;
             
+            // First, create the arena entry
             const newArenaRef = database.ref('arenas').push();
+            const arenaId = newArenaRef.key;
+            
             newArenaRef.set({
                 name: name,
                 address: address,
                 phone: phone,
                 hours: hours,
+                rates: rates,
                 facilities: facilities,
                 addedBy: currentUser.uid,
                 timestamp: firebase.database.ServerValue.TIMESTAMP
+            })
+            .then(() => {
+                // If images were selected, upload them
+                if (imageFiles.length > 0) {
+                    const uploadPromises = [];
+                    const imageUrls = [];
+                    
+                    for (let i = 0; i < imageFiles.length; i++) {
+                        const file = imageFiles[i];
+                        const storageRef = storage.ref(`arenas/${arenaId}/${file.name}`);
+                        const uploadTask = storageRef.put(file);
+                        
+                        uploadPromises.push(
+                            uploadTask.then(snapshot => snapshot.ref.getDownloadURL())
+                                .then(url => {
+                                    imageUrls.push(url);
+                                })
+                        );
+                    }
+                    
+                    // Wait for all uploads to complete
+                    return Promise.all(uploadPromises)
+                        .then(() => {
+                            // Update arena with image URLs
+                            return newArenaRef.update({ images: imageUrls });
+                        });
+                }
             })
             .then(() => {
                 alert('Arena added successfully!');
@@ -1692,8 +1579,8 @@
             const arenaName = document.getElementById('match-arena').options[document.getElementById('match-arena').selectedIndex].text;
             const date = document.getElementById('match-date').value;
             const time = document.getElementById('match-time').value;
-            const overs = document.getElementById('match-overs').value;
             const playersNeeded = document.getElementById('match-players-needed').value;
+            const requirements = Array.from(document.getElementById('match-requirements').selectedOptions).map(opt => opt.value);
             const contact = document.getElementById('match-contact').value;
             const notes = document.getElementById('match-notes').value;
             
@@ -1708,8 +1595,8 @@
                 date: date,
                 time: time,
                 timestamp: timestamp,
-                overs: overs,
                 playersNeeded: playersNeeded,
+                requirements: requirements,
                 contact: contact,
                 notes: notes,
                 createdBy: currentUser.uid,
@@ -1743,205 +1630,17 @@
                 skill: skill,
                 contact: contact,
                 notes: notes,
-                createdBy: currentUser.uid,
+                ownerId: currentUser.uid,
+                ownerName: currentUserData.name,
                 createdAt: firebase.database.ServerValue.TIMESTAMP
             })
             .then(() => {
-                alert('Team added successfully!');
+                alert('Team created successfully!');
                 hideAddTeamForm();
             })
             .catch(error => {
-                alert('Error adding team: ' + error.message);
+                alert('Error creating team: ' + error.message);
             });
-        }
-
-        function addMatchDay(e) {
-            e.preventDefault();
-            if (!currentUser) return;
-            
-            const name = document.getElementById('matchday-name').value;
-            const date = document.getElementById('matchday-date').value;
-            
-            const newMatchDayRef = database.ref('users/' + currentUser.uid + '/matchDays').push();
-            newMatchDayRef.set({
-                name: name,
-                date: date,
-                createdAt: firebase.database.ServerValue.TIMESTAMP
-            })
-            .then(() => {
-                alert('Match day added successfully!');
-                hideAddMatchDayForm();
-            })
-            .catch(error => {
-                alert('Error adding match day: ' + error.message);
-            });
-        }
-
-        function addMatchToDay(e) {
-            e.preventDefault();
-            if (!currentUser || !currentMatchDayId) return;
-            
-            const team1 = document.getElementById('match-team1').value;
-            const team2 = document.getElementById('match-team2').value;
-            const overs = document.getElementById('match-overs').value;
-            
-            const newMatchRef = database.ref('users/' + currentUser.uid + '/matchDays/' + currentMatchDayId + '/matches').push();
-            newMatchRef.set({
-                team1: team1,
-                team2: team2,
-                overs: overs,
-                scorecard: {
-                    team1: { runs: 0, wickets: 0, overs: 0, batsmen: [], bowlers: [] },
-                    team2: { runs: 0, wickets: 0, overs: 0, batsmen: [], bowlers: [] }
-                },
-                currentInnings: 1,
-                currentOver: 0,
-                currentBall: 0,
-                currentOverBalls: [],
-                createdAt: firebase.database.ServerValue.TIMESTAMP
-            })
-            .then(() => {
-                alert('Match added successfully!');
-                hideAddMatchToDayForm();
-            })
-            .catch(error => {
-                alert('Error adding match: ' + error.message);
-            });
-        }
-
-        // Scoreboard Functions
-        function recordBall(result) {
-            if (!matchData.scorecard) return;
-            
-            const battingTeam = currentInnings === 1 ? 'team1' : 'team2';
-            const bowlingTeam = currentInnings === 1 ? 'team2' : 'team1';
-            
-            // Add ball to current over
-            currentOverBalls.push(result);
-            currentBall++;
-            
-            // Update score based on ball result
-            if (result === 'Wd') {
-                // Wide ball - add 1 run (or more if specified)
-                matchData.scorecard[battingTeam].runs += 1;
-                // Update bowler's runs
-                matchData.scorecard[bowlingTeam].bowlers[0].runs += 1;
-            } else if (result === 'W') {
-                // Wicket
-                matchData.scorecard[battingTeam].wickets += 1;
-                // Update bowler's wickets
-                matchData.scorecard[bowlingTeam].bowlers[0].wickets += 1;
-                // Update batsman status
-                matchData.scorecard[battingTeam].batsmen[0].out = 'b ' + matchData.scorecard[bowlingTeam].bowlers[0].name;
-            } else if (typeof result === 'number') {
-                // Runs scored
-                matchData.scorecard[battingTeam].runs += result;
-                // Update batsman stats
-                matchData.scorecard[battingTeam].batsmen[0].runs += result;
-                matchData.scorecard[battingTeam].batsmen[0].balls++;
-                if (result === 4) matchData.scorecard[battingTeam].batsmen[0].fours++;
-                if (result === 6) matchData.scorecard[battingTeam].batsmen[0].sixes++;
-                // Update bowler's runs
-                matchData.scorecard[bowlingTeam].bowlers[0].runs += result;
-            }
-            
-            // Update bowler's balls bowled (except for wides)
-            if (result !== 'Wd') {
-                matchData.scorecard[bowlingTeam].bowlers[0].balls++;
-            }
-            
-            // Check if over is completed (6 legal balls)
-            if (currentBall >= 6) {
-                endOver();
-                return;
-            }
-            
-            // Save to database
-            saveMatchData();
-            
-            // Update UI
-            updateScoreDisplay();
-        }
-
-        function endOver() {
-            if (currentBall === 0) return; // No balls in this over
-            
-            const battingTeam = currentInnings === 1 ? 'team1' : 'team2';
-            const bowlingTeam = currentInnings === 1 ? 'team2' : 'team1';
-            
-            // Update overs count
-            matchData.scorecard[battingTeam].overs = currentOver + 1;
-            
-            // Check for maiden over (no runs conceded)
-            if (matchData.scorecard[bowlingTeam].bowlers[0].runs === 0) {
-                matchData.scorecard[bowlingTeam].bowlers[0].maidens++;
-            }
-            
-            // Reset over counters
-            currentOver++;
-            currentBall = 0;
-            currentOverBalls = [];
-            
-            // Save to database
-            saveMatchData();
-            
-            // Update UI
-            updateScoreDisplay();
-        }
-
-        function switchInnings() {
-            if (currentInnings === 1) {
-                currentInnings = 2;
-            } else {
-                currentInnings = 1;
-            }
-            
-            // Reset over counters for new innings
-            currentOver = 0;
-            currentBall = 0;
-            currentOverBalls = [];
-            
-            // Save to database
-            saveMatchData();
-            
-            // Update UI
-            updateScoreDisplay();
-        }
-
-        function saveMatchData() {
-            if (!currentUser || !currentMatchDayId || !currentMatchId) return;
-            
-            database.ref('users/' + currentUser.uid + '/matchDays/' + currentMatchDayId + '/matches/' + currentMatchId).update({
-                scorecard: matchData.scorecard,
-                currentInnings: currentInnings,
-                currentOver: currentOver,
-                currentBall: currentBall,
-                currentOverBalls: currentOverBalls
-            });
-        }
-
-        function deleteMatchDay(matchDayId) {
-            if (!confirm('Are you sure you want to delete this match day and all its matches?')) return;
-            
-            database.ref('users/' + currentUser.uid + '/matchDays/' + matchDayId).remove()
-                .then(() => {
-                    alert('Match day deleted successfully');
-                })
-                .catch(error => {
-                    alert('Error deleting match day: ' + error.message);
-                });
-        }
-
-        function deleteMatch(matchDayId, matchId) {
-            if (!confirm('Are you sure you want to delete this match?')) return;
-            
-            database.ref('users/' + currentUser.uid + '/matchDays/' + matchDayId + '/matches/' + matchId).remove()
-                .then(() => {
-                    alert('Match deleted successfully');
-                })
-                .catch(error => {
-                    alert('Error deleting match: ' + error.message);
-                });
         }
     </script>
 </body>
